@@ -1,0 +1,18 @@
+{
+  "name": "agent-harness-core",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "实验三：DeepSeek Harness core 的最小实现（agent loop + 事件会话 + 工具调用）",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "tsx --test tests/*.test.ts",
+    "demo": "tsx src/cli.ts",
+    "crawl": "tsx src/cli.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  }
+}
