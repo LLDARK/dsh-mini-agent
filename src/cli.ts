@@ -96,14 +96,23 @@ async function main(): Promise<void> {
     goals.push(options.task);
   } else {
     const rl = createInterface({ input: process.stdin, output: process.stdout });
+    let closed = false;
+    rl.on("close", () => { closed = true; });
     for (;;) {
-      const input = (await rl.question("\n目标> ")).trim();
+      if (closed) break;
+      let input: string;
+      try {
+        input = (await rl.question("\n目标> ")).trim();
+      } catch (error) {
+        if ((error as Error).name === "AbortError") break;
+        throw error;
+      }
       if (!input || input === "exit" || input === "quit") break;
       goals.push(input);
       await runOnce(agent, input);
       goals.pop();
     }
-    rl.close();
+    if (!closed) rl.close();
     return;
   }
 
